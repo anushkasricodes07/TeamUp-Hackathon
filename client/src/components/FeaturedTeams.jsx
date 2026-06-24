@@ -1,35 +1,31 @@
+import { useEffect, useState } from "react";
 import TeamCard from "./TeamCard";
 
-function FeaturedTeams({ search}) {
+function FeaturedTeams({ search }) {
+  const[teams, setTeams ] = useState([]);
+  const [loading, setLoading] = useState(true);
 
-  const teams = [
-    {
-      teamName: "AI Innovators",
-      role: "Need 3 Developers",
-      members: 4
-    },
-    {
-      teamName: "Design Ninjas",
-      role: "Need UI Designer",
-      members: 3
-    },
-    {
-      teamName: "Hack Masters",
-      role: "Need MERN Developer",
-      members: 5
-    },
-    {
-      teamName: "Code Warriors",
-      role: "Need Frontend Developer",
-      members: 4
-    }
-  ];
+  useEffect(() => {
+    fetch("http://localhost:5000/teams")
+      .then((res) => res.json())
+      .then((data) => {
+        setTeams(data);
+      });
+  }, []);
 
   const filteredTeams = teams.filter(
-  (team) =>
-    team.teamName.toLowerCase().includes(search.toLowerCase()) ||
-    team.role.toLowerCase().includes(search.toLowerCase())
-);
+    (team) =>
+      team.teamName.toLowerCase().includes(search.toLowerCase()) ||
+      team.role.toLowerCase().includes(search.toLowerCase())
+  );
+  
+  if (loading) {
+  return (
+    <h2 className="text-center mt-20 text-xl">
+      Loading teams...
+    </h2>
+  );
+}
 
   return (
     <section id="featured-teams" className="mt-20">
