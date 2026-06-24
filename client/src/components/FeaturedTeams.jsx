@@ -1,6 +1,6 @@
 import TeamCard from "./TeamCard";
 
-function FeaturedTeams() {
+function FeaturedTeams({ search}) {
 
   const teams = [
     {
@@ -25,8 +25,14 @@ function FeaturedTeams() {
     }
   ];
 
+  const filteredTeams = teams.filter(
+  (team) =>
+    team.teamName.toLowerCase().includes(search.toLowerCase()) ||
+    team.role.toLowerCase().includes(search.toLowerCase())
+);
+
   return (
-    <section className="mt-20">
+    <section id="featured-teams" className="mt-20">
       <h2 className="text-4xl font-bold text-center">
         Featured Teams
       </h2>
@@ -36,7 +42,7 @@ function FeaturedTeams() {
 </p>
 
       <div className="flex flex-wrap gap-6 justify-center mt-8">
-        {teams.map((team, index) => (
+        {filteredTeams.map((team, index) => (
           <TeamCard
             key={index}
             teamName={team.teamName}

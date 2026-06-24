@@ -15,13 +15,27 @@ function Hero() {
       </p>
 
       <div className="mt-8 flex justify-center gap-4 flex-wrap">
-        <button className="bg-purple-600 text-white px-6 py-3 rounded-xl hover:bg-purple-700 transition shadow-lg">
-          Get Started
-        </button>
+        <button
+  onClick={() =>
+    document
+      .getElementById("featured-teams")
+      .scrollIntoView({ behavior: "smooth" })
+  }
+  className="bg-purple-600 text-white px-6 py-3 rounded-lg"
+>
+  Get Started
+</button>
 
-        <button className="border border-purple-600 text-purple-600 px-6 py-3 rounded-xl hover:bg-purple-50 transition">
-          Explore Teams
-        </button>
+        <button
+  onClick={() =>
+    document
+      .getElementById("featured-teams")
+      .scrollIntoView({ behavior: "smooth" })
+  }
+  className="border border-purple-600 text-purple-600 px-6 py-3 rounded-lg"
+>
+  Explore Teams
+</button>
       </div>
     </section>
   );

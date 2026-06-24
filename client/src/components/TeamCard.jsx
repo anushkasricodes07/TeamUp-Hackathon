@@ -13,7 +13,7 @@ function TeamCard({ teamName, role, members }) {
         👥 {members} Members
       </p>
 
-      <button className="mt-4 bg-purple-600 text-white px-4 py-2 rounded-lg hover:bg-purple-700">
+      <button className="mt-4 bg-purple-600 text-white px-4 py-2 rounded-lg hover:bg-purple-700" onClick={() => alert("Team joining functionality will be available soon 🚀")}>
         Join Team
       </button>
     </div>

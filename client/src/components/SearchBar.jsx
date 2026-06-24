@@ -1,8 +1,4 @@
-import { useState } from "react";
-
-function SearchBar() {
-  const [search, setSearch] = useState("");
-
+function SearchBar({ search, setSearch }) {
   return (
     <div className="mt-16 flex flex-col items-center">
       <input
