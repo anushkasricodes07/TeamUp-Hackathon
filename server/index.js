@@ -10,8 +10,7 @@ app.get("/", (req, res) => {
   res.send("TeamUp Backend Running");
 });
 
-app.get("/teams", (req, res) => {
-  res.json([
+let teams = [
     {
       teamName: "AI Innovators",
       role: "Need 3 Developers",
@@ -32,7 +31,17 @@ app.get("/teams", (req, res) => {
   role: "Need Frontend Developer",
   members: 4
 }
-  ]);
+  ];
+  app.get("/teams", (req, res) => {
+  res.json(teams);
+});
+
+app.post("/teams", (req, res) => {
+  teams.push(req.body);
+
+  res.json({
+    message: "Team Added Successfully"
+  });
 });
 
 app.listen(5000, () => {
