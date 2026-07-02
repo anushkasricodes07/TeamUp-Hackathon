@@ -3,6 +3,7 @@ require("dotenv").config();
 const express = require("express");
 const cors = require("cors");
 const mongoose = require("mongoose");
+const Team = require("./models/Team");
 
 const app = express();
 
@@ -24,38 +25,16 @@ app.get("/", (req, res) => {
   res.send("TeamUp Backend Running");
 });
 
-// Temporary Data
-let teams = [
-  {
-    teamName: "AI Innovators",
-    role: "Need 3 Developers",
-    members: 4,
-  },
-  {
-    teamName: "Hack Masters",
-    role: "Need MERN Developer",
-    members: 5,
-  },
-  {
-    teamName: "Design Ninjas",
-    role: "Need UI Designer",
-    members: 3,
-  },
-  {
-    teamName: "Code Warriors",
-    role: "Need Frontend Developer",
-    members: 4,
-  },
-];
-
 // GET All Teams
-app.get("/teams", (req, res) => {
+app.get("/teams", async (req, res) => {
+  const teams = await Team.find();
+
   res.json(teams);
 });
 
 // POST New Team
-app.post("/teams", (req, res) => {
-  teams.push(req.body);
+app.post("/teams", async (req, res) => {
+  await Team.create(req.body);
 
   res.json({
     message: "Team Added Successfully",
