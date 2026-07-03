@@ -27,11 +27,17 @@ app.get("/", (req, res) => {
 
 // GET All Teams
 app.get("/teams", async (req, res) => {
-  const teams = await Team.find();
-
-  res.json(teams);
+  try {
+    const teams = await Team.find();
+    console.log(teams); // 👈 Ye bhi add karo
+    res.json(teams);
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({
+      error: err.message,
+    });
+  }
 });
-
 // POST New Team
 app.post("/teams", async (req, res) => {
   await Team.create(req.body);

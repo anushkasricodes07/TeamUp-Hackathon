@@ -6,13 +6,17 @@ function FeaturedTeams({ search }) {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    fetch("http://localhost:5000/teams")
-      .then((res) => res.json())
-      .then((data) => {
-        setTeams(data);
-      });
-  }, []);
-
+  fetch("http://localhost:5000/teams")
+    .then((res) => res.json())
+    .then((data) => {
+      setTeams(data);
+      setLoading(false);   
+    })
+    .catch((err) => {
+      console.log(err);
+      setLoading(false);   // Agar error aaye tab bhi loading hata do
+    });
+}, []);
   const filteredTeams = teams.filter(
     (team) =>
       team.teamName.toLowerCase().includes(search.toLowerCase()) ||
