@@ -14,7 +14,7 @@ app.use(express.json());
 mongoose
   .connect(process.env.MONGO_URI)
   .then(() => {
-    console.log("MongoDB Connected");
+    console.log("✅ MongoDB Connected");
   })
   .catch((err) => {
     console.log(err);
@@ -29,22 +29,29 @@ app.get("/", (req, res) => {
 app.get("/teams", async (req, res) => {
   try {
     const teams = await Team.find();
-    console.log(teams); // 👈 Ye bhi add karo
     res.json(teams);
   } catch (err) {
-    console.error(err);
     res.status(500).json({
       error: err.message,
     });
   }
 });
+
 // POST New Team
 app.post("/teams", async (req, res) => {
-  await Team.create(req.body);
+  try {
+    console.log(req.body);
 
-  res.json({
-    message: "Team Added Successfully",
-  });
+    await Team.create(req.body);
+
+    res.json({
+      message: "Team Added Successfully",
+    });
+  } catch (err) {
+    res.status(500).json({
+      error: err.message,
+    });
+  }
 });
 
 // Start Server
