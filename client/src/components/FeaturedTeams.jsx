@@ -41,7 +41,7 @@ function FeaturedTeams({ search }) {
   Discover talented teams looking for members.
 </p>
 
-      <div className="flex flex-wrap gap-6 justify-center mt-8">
+      <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mt-8">
         {filteredTeams.map((team, index) => (
           <TeamCard
             key={index}
