@@ -13,23 +13,36 @@ function App() {
   const [search, setSearch] = useState("");
 
   return (
-    <>
-      <Navbar />
-      <Hero />
+  <>
+    <Navbar />
 
-      <SearchBar
-        search={search}
-        setSearch={setSearch}
+    <Routes>
+      <Route
+        path="/"
+        element={
+          <>
+            <Hero />
+
+            <SearchBar
+              search={search}
+              setSearch={setSearch}
+            />
+
+            <FeaturedTeams search={search} />
+
+            <Working />
+            <Footer />
+          </>
+        }
       />
 
-      <FeaturedTeams
-        search={search}
+      <Route
+        path="/create-team"
+        element={<CreateTeam />}
       />
-
-      <Working />
-      <Footer />
-    </>
-  );
+    </Routes>
+  </>
+); 
 }
 
 export default App;
