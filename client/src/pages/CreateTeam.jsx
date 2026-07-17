@@ -12,14 +12,14 @@ function CreateTeam() {
     deadline: "",
   });
 
-  const handleChange = (e) => {
+  const handleChange = async (e) => {
     setFormData({
       ...formData,
       [e.target.name]: e.target.value,
     });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
     if (
@@ -36,10 +36,35 @@ function CreateTeam() {
       return;
     }
 
-    alert("Team created successfully!");
+    try {
+  const response = await fetch("http://localhost:5000/teams", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      ...formData,
+      techStack: formData.techStack
+        .split(",")
+        .map((item) => item.trim()),
 
-    console.log("Form Submitted Successfully");
-    console.log(formData);
+      requiredRoles: formData.requiredRoles
+        .split(",")
+        .map((item) => item.trim()),
+    }),
+  });
+
+  const data = await response.json();
+
+  alert(data.message);
+
+  console.log(data);
+
+} catch (error) {
+  console.log(error);
+
+  alert("Something went wrong");
+}
   };
 
   return (
