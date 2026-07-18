@@ -18,11 +18,10 @@ function FeaturedTeams({ search }) {
     });
 }, []);
   const filteredTeams = teams.filter(
-    (team) =>
-      team.teamName.toLowerCase().includes(search.toLowerCase()) ||
-      team.role.toLowerCase().includes(search.toLowerCase())
-  );
-  
+  (team) =>
+    team.teamName.toLowerCase().includes(search.toLowerCase()) ||
+    team.projectTitle.toLowerCase().includes(search.toLowerCase())
+);
   if (loading) {
   return (
     <h2 className="text-center mt-20 text-xl">
@@ -43,12 +42,15 @@ function FeaturedTeams({ search }) {
 
       <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mt-8">
         {filteredTeams.map((team, index) => (
-          <TeamCard
-            key={index}
-            teamName={team.teamName}
-            role={team.role}
-            members={team.members}
-          />
+         <TeamCard
+  key={team._id}
+  teamName={team.teamName}
+  projectTitle={team.projectTitle}
+  requiredRoles={team.requiredRoles}
+  currentMembers={team.currentMembers}
+  teamSize={team.teamSize}
+  hackathonName={team.hackathonName}
+/> 
         ))}
       </div>
     </section>

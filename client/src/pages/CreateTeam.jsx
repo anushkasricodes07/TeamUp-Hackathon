@@ -1,4 +1,6 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+
 
 function CreateTeam() {
   const [formData, setFormData] = useState({
@@ -12,7 +14,8 @@ function CreateTeam() {
     deadline: "",
   });
 
-  const handleChange = async (e) => {
+  const navigate = useNavigate();
+  const handleChange = (e) => {
     setFormData({
       ...formData,
       [e.target.name]: e.target.value,
@@ -54,9 +57,21 @@ function CreateTeam() {
     }),
   });
 
-  const data = await response.json();
+  const data = await response.json();   
 
   alert(data.message);
+  setFormData({
+  teamName: "",
+  projectTitle: "",
+  description: "",
+  techStack: "",
+  requiredRoles: "",
+  teamSize: "",
+  hackathonName: "",
+  deadline: "",
+});
+
+navigate("/");
 
   console.log(data);
 
