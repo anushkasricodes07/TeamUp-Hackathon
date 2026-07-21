@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 
 
 function CreateTeam() {
@@ -13,6 +14,9 @@ function CreateTeam() {
     hackathonName: "",
     deadline: "",
   });
+
+
+  const [loading, setLoading] = useState(false);
 
   const navigate = useNavigate();
   const handleChange = (e) => {
@@ -38,7 +42,9 @@ function CreateTeam() {
       alert("Please fill in all required fields.");
       return;
     }
+  
 
+    setLoading(true);
     try {
   const response = await fetch("http://localhost:5000/teams", {
     method: "POST",
@@ -58,7 +64,9 @@ function CreateTeam() {
   });
 
   const data = await response.json();   
-
+ if (!response.ok) {
+  throw new Error(data.error);
+}
   alert(data.message);
   setFormData({
   teamName: "",
@@ -71,6 +79,8 @@ function CreateTeam() {
   deadline: "",
 });
 
+setLoading(false);
+
 navigate("/");
 
   console.log(data);
@@ -78,10 +88,9 @@ navigate("/");
 } catch (error) {
   console.log(error);
 
-  alert("Something went wrong");
-}
+  alert(error.message);
+  }
   };
-
   return (
     <div className="min-h-screen bg-gray-100 py-10 px-4">
       <div className="max-w-2xl mx-auto bg-white shadow-lg rounded-lg p-8">
@@ -163,12 +172,12 @@ navigate("/");
           />
 
           <button
-            type="submit"
-            className="w-full bg-purple-600 text-white py-3 rounded-lg hover:bg-purple-700"
-          >
-            Create Team
-          </button>
-
+  type="submit"
+  disabled={loading}
+  className="w-full bg-purple-600 text-white py-3 rounded-lg hover:bg-purple-700 disabled:bg-gray-400"
+>
+  {loading ? "Creating Team..." : "Create Team"}
+</button>
         </form>
       </div>
     </div>
