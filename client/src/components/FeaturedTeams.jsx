@@ -50,6 +50,8 @@ function FeaturedTeams({ search }) {
   currentMembers={team.currentMembers}
   teamSize={team.teamSize}
   hackathonName={team.hackathonName}
+  techStack={team.techStack}
+ deadline={team.deadline}
 /> 
         ))}
       </div>

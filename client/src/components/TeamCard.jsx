@@ -5,6 +5,8 @@ function TeamCard({
   currentMembers,
   teamSize,
   hackathonName,
+  techStack,
+  deadline,
 }) {
   return (
     <div className="bg-white border border-gray-200 rounded-2xl p-6 shadow-lg hover:scale-105 transition">
