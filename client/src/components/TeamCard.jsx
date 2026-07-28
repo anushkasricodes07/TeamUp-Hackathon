@@ -7,8 +7,17 @@ function TeamCard({
   hackathonName,
   techStack,
   deadline,
-}) {
+}){
+
+  const formattedDate = deadline
+  ? new Date(deadline).toLocaleDateString("en-GB", {
+      day: "numeric",
+      month: "short",
+      year: "numeric",
+    })
+  : "No deadline";
   return (
+    
     <div className="bg-white border border-gray-200 rounded-2xl p-6 shadow-lg hover:scale-105 transition">
       <h3 className="text-xl font-bold text-purple-600">
         {teamName}
@@ -19,7 +28,11 @@ function TeamCard({
       </p>
 
       <p className="mt-2 text-gray-600">
-        <strong>Roles:</strong> {requiredRoles.join(", ")}
+  💻 {techStack?.join(" • ")}
+</p>
+
+      <p className="mt-2 text-gray-600">
+        <strong>Roles:</strong> {requiredRoles?.join(", ")}
       </p>
 
       <p className="mt-2 text-gray-600">
@@ -28,6 +41,10 @@ function TeamCard({
 
       <p className="mt-2 text-sm text-gray-500">
         🏆 {hackathonName}
+      </p>
+
+      <p className="mt-2 text-sm text-gray-500">
+        🕒 Deadline: {formattedDate}
       </p>
 
       <button
