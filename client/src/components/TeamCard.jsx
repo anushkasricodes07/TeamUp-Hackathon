@@ -1,6 +1,8 @@
 import { useState } from "react";
+import { toast } from "react-toastify";
 
 function TeamCard({
+  _id,
   teamName,
   projectTitle,
   requiredRoles,
@@ -81,9 +83,30 @@ function TeamCard({
 
               <button
                 className="px-4 py-2 bg-purple-600 text-white rounded-lg hover:bg-purple-700"
-                onClick={() => {
-                  alert("Join request sent successfully! 🎉");
-                  setShowModal(false);
+                onClick={async () => {
+                  try {
+                    const response = await fetch(
+                      `http://localhost:5000/teams/${_id}/join`,
+                      {
+                        method: "POST",
+                        headers: {
+                          "Content-Type": "application/json",
+                        },
+                      }
+                    );
+
+                    const data = await response.json();
+
+                    if (!response.ok) {
+                      throw new Error(data.error);
+                    }
+
+                    toast.success(data.message);
+                    setShowModal(false);
+                  } catch (error) {
+                    console.log(error);
+                    toast.error(error.message);
+                  }
                 }}
               >
                 Join Team

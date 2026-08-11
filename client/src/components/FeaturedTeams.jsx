@@ -44,6 +44,7 @@ function FeaturedTeams({ search }) {
         {filteredTeams.map((team, index) => (
          <TeamCard
   key={team._id}
+  _id={team._id}
   teamName={team.teamName}
   projectTitle={team.projectTitle}
   requiredRoles={team.requiredRoles}
