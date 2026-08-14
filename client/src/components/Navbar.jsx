@@ -1,6 +1,14 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
-function Navbar() {
+function Navbar({ isLoggedIn, setIsLoggedIn }) {
+  const navigate = useNavigate();
+
+  const handleLogout = () => {
+    localStorage.removeItem("token");
+    setIsLoggedIn(false);
+    navigate("/login");
+  };
+
   return (
     <nav className="flex justify-between items-center px-8 py-4 bg-gray-900 text-white">
       <Link to="/">
@@ -17,7 +25,13 @@ function Navbar() {
         </li>
 
         <li>
-          <Link to="/login">Login</Link>
+          {isLoggedIn ? (
+            <button onClick={handleLogout}>
+              Logout
+            </button>
+          ) : (
+            <Link to="/login">Login</Link>
+          )}
         </li>
       </ul>
     </nav>

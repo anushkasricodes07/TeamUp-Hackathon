@@ -11,13 +11,13 @@ createRoot(document.getElementById("root")).render(
     <BrowserRouter>
       <App />
 
-      { <ToastContainer
+       <ToastContainer
         position="top-right"
         autoClose={3000}
         hideProgressBar={false}
         newestOnTop
         closeOnClick
-      />}
+      />
     </BrowserRouter>
   </StrictMode>
 );

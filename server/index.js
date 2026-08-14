@@ -23,7 +23,7 @@ mongoose
     console.log("✅ MongoDB Connected");
   })
   .catch((err) => {
-    console.log(err);
+    console.log("MongoDB Connection Error:", err);
   });
 
 // Home Route
@@ -92,6 +92,7 @@ app.post("/teams/:teamId/join", async (req, res) => {
     });
   }
 });
+
 // POST Signup
 app.post("/auth/signup", async (req, res) => {
   try {
@@ -124,12 +125,18 @@ app.post("/auth/signup", async (req, res) => {
     });
   }
 });
+
 // POST Login
 app.post("/auth/login", async (req, res) => {
   try {
     const { email, password } = req.body;
 
+    // Debugging logs
+    console.log("LOGIN EMAIL:", email);
+  
     const user = await User.findOne({ email });
+
+    console.log("USER FOUND:", user ? "YES" : "NO");
 
     if (!user) {
       return res.status(400).json({
@@ -142,6 +149,8 @@ app.post("/auth/login", async (req, res) => {
       user.password
     );
 
+    console.log("PASSWORD MATCH:", isPasswordCorrect);
+
     if (!isPasswordCorrect) {
       return res.status(400).json({
         error: "Invalid email or password",
@@ -151,21 +160,26 @@ app.post("/auth/login", async (req, res) => {
     const token = jwt.sign(
       { userId: user._id },
       process.env.JWT_SECRET,
-      { expiresIn: "1d" }
+      {
+        expiresIn: "1d",
+      }
     );
+
+    console.log("✅ Login successful");
 
     res.json({
       message: "Login successful!",
       token,
     });
   } catch (err) {
-    console.log(err);
+    console.log("LOGIN ERROR:", err);
 
     res.status(500).json({
       error: "Login failed",
     });
   }
 });
+
 // Protected Test Route
 app.get("/auth/me", authMiddleware, async (req, res) => {
   try {
