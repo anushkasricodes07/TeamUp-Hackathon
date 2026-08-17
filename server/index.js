@@ -44,16 +44,23 @@ app.get("/teams", async (req, res) => {
 });
 
 // POST New Team
-app.post("/teams", async (req, res) => {
+app.post("/teams", authMiddleware, async (req, res) => {
   try {
-    console.log(req.body);
+    console.log("Team data:", req.body);
+    console.log("Created by:", req.userId);
 
-    await Team.create(req.body);
+    const team = await Team.create({
+      ...req.body,
+      createdBy: req.userId,
+    });
 
-    res.json({
+    res.status(201).json({
       message: "Team Added Successfully",
+      team,
     });
   } catch (err) {
+    console.log(err);
+
     res.status(500).json({
       error: err.message,
     });

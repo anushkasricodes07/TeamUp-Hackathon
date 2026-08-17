@@ -46,10 +46,17 @@ function CreateTeam() {
 
     setLoading(true);
     try {
+      const token = localStorage.getItem("token");
+      if (!token) {
+  alert("Please login first.");
+  navigate("/login");
+  return;
+}
   const response = await fetch("http://localhost:5000/teams", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
     },
     body: JSON.stringify({
       ...formData,

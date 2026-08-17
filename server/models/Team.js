@@ -50,6 +50,13 @@ const teamSchema = new mongoose.Schema(
     deadline: {
       type: Date,
     },
+
+    // User who created this team
+    createdBy: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "User",
+      required: true,
+    },
   },
   {
     timestamps: true,
