@@ -66,14 +66,58 @@ app.post("/teams", authMiddleware, async (req, res) => {
     });
   }
 });
+app.delete("/teams/:teamId", authMiddleware, async (req, res) => {
+  try {
+    const team = await Team.findById(req.params.teamId);
+
+    if (!team) {
+      return res.status(404).json({
+        error: "Team not found",
+      });
+    }
+
+    // Check if logged-in user is the owner
+    if (team.createdBy.toString() !== req.userId) {
+      return res.status(403).json({
+        error: "You are not allowed to delete this team",
+      });
+    }
+
+    await Team.findByIdAndDelete(req.params.teamId);
+
+    res.json({
+      message: "Team deleted successfully",
+    });
+  } catch (err) {
+    console.log(err);
+
+    res.status(500).json({
+      error: "Failed to delete team",
+    });
+  }
+});
 
 // POST Join Team Request
-app.post("/teams/:teamId/join", async (req, res) => {
+  app.post("/teams/:teamId/join", authMiddleware, async (req, res) => {
   try {
     const { teamId } = req.params;
+    const team = await Team.findById(teamId);
+
+if (!team) {
+  return res.status(404).json({
+    error: "Team not found",
+  });
+}
+
+if (team.createdBy.toString() === req.userId) {
+  return res.status(400).json({
+    error: "You cannot join your own team",
+  });
+}
 
     const existingRequest = await JoinRequest.findOne({
       teamId: teamId,
+      userId: req.userId,
       status: "pending",
     });
 
@@ -85,6 +129,8 @@ app.post("/teams/:teamId/join", async (req, res) => {
 
     const joinRequest = await JoinRequest.create({
       teamId: teamId,
+      userId: req.userId,
+      status: "pending",
     });
 
     res.status(201).json({
@@ -99,7 +145,56 @@ app.post("/teams/:teamId/join", async (req, res) => {
     });
   }
 });
+// GET Join Requests for Team Owner
+app.get("/teams/:teamId/requests", authMiddleware, async (req, res) => {
+  try {
+    const { teamId } = req.params;
 
+    const team = await Team.findById(teamId);
+
+    if (!team) {
+      return res.status(404).json({
+        error: "Team not found",
+      });
+    }
+
+    // Only team owner can view requests
+    if (team.createdBy.toString() !== req.userId) {
+      return res.status(403).json({
+        error: "You are not allowed to view these requests",
+      });
+    }
+
+    const requests = await JoinRequest.find({
+      teamId: teamId,
+      status: "pending",
+    }).populate("userId", "name email");
+
+    res.json(requests);
+  } catch (err) {
+    console.log(err);
+
+    res.status(500).json({
+      error: "Failed to get join requests",
+    });
+  }
+  // GET Teams Created By Logged-in User
+app.get("/teams/my-teams", authMiddleware, async (req, res) => {
+  try {
+    const teams = await Team.find({
+      createdBy: req.userId,
+    });
+
+    res.json(teams);
+  } catch (err) {
+    console.log(err);
+
+    res.status(500).json({
+      error: "Failed to get your teams",
+    });
+  }
+});
+});
 // POST Signup
 app.post("/auth/signup", async (req, res) => {
   try {

@@ -52,8 +52,9 @@ function FeaturedTeams({ search }) {
   teamSize={team.teamSize}
   hackathonName={team.hackathonName}
   techStack={team.techStack}
- deadline={team.deadline}
-/> 
+  deadline={team.deadline}
+  createdBy={team.createdBy}
+/>
         ))}
       </div>
     </section>

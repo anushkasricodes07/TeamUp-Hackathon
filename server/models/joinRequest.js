@@ -13,6 +13,11 @@ const joinRequestSchema = new mongoose.Schema(
       enum: ["pending", "accepted", "rejected"],
       default: "pending",
     },
+    userId: {
+  type: mongoose.Schema.Types.ObjectId,
+  ref: "User",
+  required: true,
+},
   },
   {
     timestamps: true,

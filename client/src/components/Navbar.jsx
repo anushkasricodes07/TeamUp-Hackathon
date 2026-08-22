@@ -23,15 +23,22 @@ function Navbar({ isLoggedIn, setIsLoggedIn }) {
         <li>
           <Link to="/create-team">Create Team</Link>
         </li>
+        <li>
+  <Link to="/requests">Requests</Link>
+</li>
 
         <li>
           {isLoggedIn ? (
-            <button onClick={handleLogout}>
-              Logout
-            </button>
-          ) : (
-            <Link to="/login">Login</Link>
-          )}
+  <button onClick={handleLogout}>
+    Logout
+  </button>
+) : (
+  <>
+    <Link to="/login">Login</Link>
+    <span className="mx-2">|</span>
+    <Link to="/signup">Signup</Link>
+  </>
+)}
         </li>
       </ul>
     </nav>

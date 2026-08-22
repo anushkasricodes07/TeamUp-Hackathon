@@ -8,8 +8,11 @@ import FeaturedTeams from "./components/FeaturedTeams";
 import Working from "./components/Working";
 import Footer from "./components/Footer";
 
+
 import CreateTeam from "./pages/CreateTeam";
+import Requests from "./pages/Requests";
 import Login from "./pages/Login";
+import Signup from "./pages/signup";
 
 function App() {
   const [search, setSearch] = useState("");
@@ -49,6 +52,10 @@ function App() {
           path="/create-team"
           element={<CreateTeam />}
         />
+        <Route
+  path="/requests"
+  element={<Requests />}
+/>
 
         <Route
           path="/login"
@@ -56,6 +63,10 @@ function App() {
             <Login setIsLoggedIn={setIsLoggedIn} />
           }
         />
+        <Route
+  path="/signup"
+  element={<Signup />}
+/>
       </Routes>
     </>
   );
