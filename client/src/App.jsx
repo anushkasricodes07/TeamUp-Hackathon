@@ -12,7 +12,7 @@ import Footer from "./components/Footer";
 import CreateTeam from "./pages/CreateTeam";
 import Requests from "./pages/Requests";
 import Login from "./pages/login";
-import Signup from "./pages/signup";
+import Signup from "./pages/Signup";
 
 function App() {
   const [search, setSearch] = useState("");
