@@ -7,7 +7,7 @@ const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 
 const Team = require("./models/Team");
-const JoinRequest = require("./models/JoinRequest");
+const JoinRequest = require("./models/joinRequest");
 const User = require("./models/User");
 const authMiddleware = require("./middleware/authMiddleware");
 
