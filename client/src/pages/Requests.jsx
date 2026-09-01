@@ -76,69 +76,79 @@ function Requests() {
           Join Requests
         </h1>
 
-        {/* My Teams */}
-        <div className="grid md:grid-cols-2 gap-6">
-          {teams.map((team) => (
-            <div
-              key={team._id}
-              className="bg-white p-6 rounded-xl shadow"
-            >
-              <h2 className="text-xl font-bold">
-                {team.teamName}
-              </h2>
+        {teams.length === 0 ? (
+          <div className="bg-white p-6 rounded-xl shadow text-center">
+            <p className="text-gray-500">
+              You don't have any teams. Only team owners can view join
+              requests.
+            </p>
+          </div>
+        ) : (
+          <>
+            {/* My Teams */}
+            <div className="grid md:grid-cols-2 gap-6">
+              {teams.map((team) => (
+                <div
+                  key={team._id}
+                  className="bg-white p-6 rounded-xl shadow"
+                >
+                  <h2 className="text-xl font-bold">
+                    {team.teamName}
+                  </h2>
 
-              <p className="text-gray-500 mt-1">
-                {team.projectTitle}
-              </p>
+                  <p className="text-gray-500 mt-1">
+                    {team.projectTitle}
+                  </p>
 
-              <button
-                onClick={() => fetchRequests(team._id)}
-                className="mt-4 bg-purple-600 text-white px-4 py-2 rounded-lg hover:bg-purple-700"
-              >
-                View Requests
-              </button>
-            </div>
-          ))}
-        </div>
-
-        {/* Requests */}
-        {selectedTeam && (
-          <div className="mt-10 bg-white p-6 rounded-xl shadow">
-            <h2 className="text-2xl font-bold mb-5">
-              Pending Requests
-            </h2>
-
-            {requests.length === 0 ? (
-              <p className="text-gray-500">
-                No pending requests.
-              </p>
-            ) : (
-              <div className="space-y-4">
-                {requests.map((request) => (
-                  <div
-                    key={request._id}
-                    className="border rounded-lg p-4 flex justify-between items-center"
+                  <button
+                    onClick={() => fetchRequests(team._id)}
+                    className="mt-4 bg-purple-600 text-white px-4 py-2 rounded-lg hover:bg-purple-700"
                   >
-                    <div>
-                      <h3 className="font-semibold">
-                        {request.userId.name}
-                      </h3>
+                    View Requests
+                  </button>
+                </div>
+              ))}
+            </div>
 
-                      <p className="text-gray-500">
-                        {request.userId.email}
-                      </p>
-                    </div>
+            {/* Requests */}
+            {selectedTeam && (
+              <div className="mt-10 bg-white p-6 rounded-xl shadow">
+                <h2 className="text-2xl font-bold mb-5">
+                  Pending Requests
+                </h2>
 
-                    <span className="text-yellow-600 font-medium">
-                      Pending
-                    </span>
+                {requests.length === 0 ? (
+                  <p className="text-gray-500">
+                    No pending requests.
+                  </p>
+                ) : (
+                  <div className="space-y-4">
+                    {requests.map((request) => (
+                      <div
+                        key={request._id}
+                        className="border rounded-lg p-4 flex justify-between items-center"
+                      >
+                        <div>
+                          <h3 className="font-semibold">
+                            {request.userId.name}
+                          </h3>
+
+                          <p className="text-gray-500">
+                            {request.userId.email}
+                          </p>
+                        </div>
+
+                        <span className="text-yellow-600 font-medium">
+                          Pending
+                        </span>
+                      </div>
+                    ))}
                   </div>
-                ))}
+                )}
               </div>
             )}
-          </div>
+          </>
         )}
-
       </div>
     </div>
   );

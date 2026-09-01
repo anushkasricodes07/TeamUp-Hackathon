@@ -178,6 +178,63 @@ app.get("/teams/:teamId/requests", authMiddleware, async (req, res) => {
       error: "Failed to get join requests",
     });
   }
+  // Accept Join Request
+app.patch("/requests/:requestId/accept", authMiddleware, async (req, res) => {
+  try {
+    const { requestId } = req.params;
+
+    const request = await JoinRequest.findById(requestId);
+
+    if (!request) {
+      return res.status(404).json({
+        error: "Join request not found",
+      });
+    }
+
+    const team = await Team.findById(request.teamId);
+
+    if (!team) {
+      return res.status(404).json({
+        error: "Team not found",
+      });
+    }
+
+    if (team.createdBy.toString() !== req.userId) {
+      return res.status(403).json({
+        error: "You are not allowed to accept this request",
+      });
+    }
+
+    if (request.status !== "pending") {
+      return res.status(400).json({
+        error: "Request already processed",
+      });
+    }
+
+    if (team.currentMembers >= team.teamSize) {
+      return res.status(400).json({
+        error: "Team is already full",
+      });
+    }
+
+    request.status = "accepted";
+    await request.save();
+
+    team.currentMembers += 1;
+    await team.save();
+
+    res.json({
+      message: "Join request accepted!",
+      request,
+    });
+  } catch (err) {
+    console.log(err);
+
+    res.status(500).json({
+      error: "Failed to accept join request",
+    });
+  }
+});
   // GET Teams Created By Logged-in User
 app.get("/teams/my-teams", authMiddleware, async (req, res) => {
   try {
