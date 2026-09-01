@@ -25,6 +25,7 @@ function Requests() {
 
         if (response.ok) {
           setTeams(data);
+          console.log("MY TEAMS FROM BACKEND:", data);
         } else {
           console.log(data.error);
         }

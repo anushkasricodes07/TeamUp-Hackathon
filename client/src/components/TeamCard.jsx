@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 
 function TeamCard({
@@ -15,6 +16,8 @@ function TeamCard({
 }) {
   const [showModal, setShowModal] = useState(false);
 
+  const navigate = useNavigate();
+
   const formattedDate = deadline
     ? new Date(deadline).toLocaleDateString("en-GB", {
         day: "numeric",
@@ -25,11 +28,8 @@ function TeamCard({
 
   // Get logged-in user's ID from JWT
   const token = localStorage.getItem("token");
-  
+
   let loggedInUserId = null;
-  console.log("TEAM:", teamName);
-console.log("CREATED BY:", createdBy);
-console.log("LOGGED USER ID:", loggedInUserId);
 
   if (token) {
     try {
@@ -50,11 +50,6 @@ console.log("LOGGED USER ID:", loggedInUserId);
     loggedInUserId &&
     ownerId &&
     String(loggedInUserId) === String(ownerId);
-
-  console.log("Team:", teamName);
-  console.log("Logged in user:", loggedInUserId);
-  console.log("Team owner:", ownerId);
-  console.log("Is owner:", isOwner);
 
   // DELETE TEAM
   const handleDelete = async () => {
@@ -96,31 +91,11 @@ console.log("LOGGED USER ID:", loggedInUserId);
       toast.error(error.message);
     }
   };
-const handleRequests = async () => {
-  try {
-    const token = localStorage.getItem("token");
 
-    const response = await fetch(
-      `http://localhost:5000/teams/${_id}/requests`,
-      {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      }
-    );
-
-    const data = await response.json();
-
-    if (!response.ok) {
-      throw new Error(data.error);
-    }
-
-    console.log("JOIN REQUESTS:", data);
-  } catch (error) {
-    console.log(error);
-    toast.error(error.message);
-  }
-};
+  // GO TO REQUESTS PAGE
+  const handleRequests = () => {
+    navigate("/requests");
+  };
 
   // JOIN TEAM
   const handleJoinTeam = async () => {
@@ -130,9 +105,9 @@ const handleRequests = async () => {
         {
           method: "POST",
           headers: {
-  "Content-Type": "application/json",
-  Authorization: `Bearer ${localStorage.getItem("token")}`,
-}
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
         }
       );
 
@@ -204,14 +179,16 @@ const handleRequests = async () => {
               Delete
             </button>
           )}
+
+          {/* REQUESTS BUTTON - ONLY OWNER */}
           {isOwner && (
-  <button
-    onClick={handleRequests}
-    className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700"
-  >
-    Requests
-  </button>
-)}
+            <button
+              onClick={handleRequests}
+              className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700"
+            >
+              Requests
+            </button>
+          )}
 
         </div>
       </div>

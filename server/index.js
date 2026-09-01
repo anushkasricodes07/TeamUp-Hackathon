@@ -178,6 +178,7 @@ app.get("/teams/:teamId/requests", authMiddleware, async (req, res) => {
       error: "Failed to get join requests",
     });
   }
+  });
   // Accept Join Request
 app.patch("/requests/:requestId/accept", authMiddleware, async (req, res) => {
   try {
@@ -238,9 +239,13 @@ app.patch("/requests/:requestId/accept", authMiddleware, async (req, res) => {
   // GET Teams Created By Logged-in User
 app.get("/teams/my-teams", authMiddleware, async (req, res) => {
   try {
+    console.log("MY TEAMS USER ID:", req.userId);
+
     const teams = await Team.find({
       createdBy: req.userId,
     });
+
+    console.log("MY TEAMS:", teams);
 
     res.json(teams);
   } catch (err) {
@@ -251,7 +256,7 @@ app.get("/teams/my-teams", authMiddleware, async (req, res) => {
     });
   }
 });
-});
+
 // POST Signup
 app.post("/auth/signup", async (req, res) => {
   try {
