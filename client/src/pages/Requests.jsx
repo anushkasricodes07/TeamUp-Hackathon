@@ -64,6 +64,60 @@ function Requests() {
       console.log(err);
     }
   };
+  const handleAccept = async (requestId) => {
+  try {
+    const response = await fetch(
+      `http://localhost:5000/requests/${requestId}/accept`,
+      {
+        method: "PATCH",
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
+
+    const data = await response.json();
+
+    if (!response.ok) {
+      throw new Error(data.error);
+    }
+
+    alert(data.message);
+
+    // Refresh requests
+    fetchRequests(selectedTeam);
+  } catch (error) {
+    console.log(error);
+    alert(error.message);
+  }
+};
+const handleReject = async (requestId) => {
+  try {
+    const response = await fetch(
+      `http://localhost:5000/requests/${requestId}/reject`,
+      {
+        method: "PATCH",
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
+
+    const data = await response.json();
+
+    if (!response.ok) {
+      throw new Error(data.error);
+    }
+
+    alert(data.message);
+
+    // Refresh requests
+    fetchRequests(selectedTeam);
+  } catch (error) {
+    console.log(error);
+    alert(error.message);
+  }
+};
 
   if (loading) {
     return <p className="text-center mt-10">Loading...</p>;
@@ -139,9 +193,20 @@ function Requests() {
                           </p>
                         </div>
 
-                        <span className="text-yellow-600 font-medium">
-                          Pending
-                        </span>
+                        <div className="flex gap-2">
+  <button
+  onClick={() => handleAccept(request._id)}
+  className="bg-green-600 text-white px-3 py-2 rounded-lg hover:bg-green-700"
+>
+  Accept
+</button>
+  <button
+  onClick={() => handleReject(request._id)}
+  className="bg-red-600 text-white px-3 py-2 rounded-lg hover:bg-red-700"
+>
+  Reject
+</button>
+</div>
                       </div>
                     ))}
                   </div>
