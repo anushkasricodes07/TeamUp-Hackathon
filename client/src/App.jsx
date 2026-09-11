@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Routes, Route } from "react-router-dom";
 
+
 import Navbar from "./components/Navbar";
 import Hero from "./components/Hero";
 import SearchBar from "./components/SearchBar";
@@ -13,6 +14,7 @@ import CreateTeam from "./pages/CreateTeam";
 import Requests from "./pages/Requests";
 import Login from "./pages/login";
 import Signup from "./pages/Signup";
+import MyRequests from "./pages/MyRequests";
 
 function App() {
   const [search, setSearch] = useState("");
@@ -68,6 +70,10 @@ function App() {
   element={<Signup />}
 />
       </Routes>
+      <Route
+  path="/my-requests"
+  element={<MyRequests />}
+/>
     </>
   );
 }

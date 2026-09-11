@@ -263,7 +263,24 @@ app.patch("/requests/:requestId/reject", authMiddleware, async (req, res) => {
         error: "You are not allowed to reject this request",
       });
     }
+// GET My Join Requests
+app.get("/requests/my-requests", authMiddleware, async (req, res) => {
+  try {
+    const requests = await JoinRequest.find({
+      userId: req.userId,
+    })
+      .populate("teamId", "teamName projectTitle")
+      .sort({ createdAt: -1 });
 
+    res.json(requests);
+  } catch (err) {
+    console.log(err);
+
+    res.status(500).json({
+      error: "Failed to get your join requests",
+    });
+  }
+});
     // Request must be pending
     if (request.status !== "pending") {
       return res.status(400).json({
