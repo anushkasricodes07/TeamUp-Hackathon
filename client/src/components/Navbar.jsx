@@ -83,6 +83,9 @@ function Navbar({ isLoggedIn, setIsLoggedIn }) {
               Create Team
             </Link>
           </li>
+          <li>
+  <Link to="/my-requests">My Requests</Link>
+</li>
 
           {isLoggedIn ? (
             <>
