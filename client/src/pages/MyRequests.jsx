@@ -21,11 +21,12 @@ function MyRequests() {
         const data = await response.json();
 
         if (response.ok) {
-          setRequests(data);
-        } else {
-          console.log(data.error);
-        }
-      } catch (error) {
+  console.log("MY REQUESTS FROM BACKEND:", data);
+  setRequests(data);
+} else {
+  console.log("MY REQUESTS ERROR:", data.error);
+}
+  } catch (error) {
         console.log(error);
       } finally {
         setLoading(false);

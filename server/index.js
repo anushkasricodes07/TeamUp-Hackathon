@@ -266,11 +266,15 @@ app.patch("/requests/:requestId/reject", authMiddleware, async (req, res) => {
 // GET My Join Requests
 app.get("/requests/my-requests", authMiddleware, async (req, res) => {
   try {
+    console.log("MY REQUESTS USER ID:", req.userId);
+
     const requests = await JoinRequest.find({
       userId: req.userId,
     })
       .populate("teamId", "teamName projectTitle")
       .sort({ createdAt: -1 });
+
+    console.log("MY REQUESTS:", requests);
 
     res.json(requests);
   } catch (err) {

@@ -40,7 +40,8 @@ function Navbar({ isLoggedIn, setIsLoggedIn }) {
               <li>
                 <Link to="/requests">Requests</Link>
               </li>
-
+              <li><Link to="/my-requests">My Requests</Link>
+              </li>
               <li>
                 <button onClick={handleLogout}>
                   Logout
