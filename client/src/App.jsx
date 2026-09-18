@@ -13,8 +13,9 @@ import Footer from "./components/Footer";
 import CreateTeam from "./pages/CreateTeam";
 import Requests from "./pages/Requests";
 import Login from "./pages/login";
-import Signup from "./pages/Signup";
+import Signup from "./pages/signup";
 import MyRequests from "./pages/MyRequests";
+import MyTeams from "./pages/MyTeams";
 
 function App() {
   const [search, setSearch] = useState("");
@@ -72,6 +73,10 @@ function App() {
 <Route
   path="/my-requests"
   element={<MyRequests />}
+/>
+<Route
+  path="/my-teams"
+  element={<MyTeams />}
 />
       </Routes>
       
