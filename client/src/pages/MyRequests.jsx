@@ -22,6 +22,9 @@ function MyRequests() {
 
         if (response.ok) {
   console.log("MY REQUESTS FROM BACKEND:", data);
+  console.log("IS ARRAY:", Array.isArray(data));
+  console.log("REQUEST COUNT:", data.length);
+
   setRequests(data);
 } else {
   console.log("MY REQUESTS ERROR:", data.error);
