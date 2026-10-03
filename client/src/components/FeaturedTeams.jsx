@@ -40,8 +40,13 @@ function FeaturedTeams({ search }) {
   Discover talented teams looking for members.
 </p>
 
-      <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mt-8">
-        {filteredTeams.map((team, index) => (
+      {filteredTeams.length === 0 ? (
+  <p className="text-center text-gray-500 mt-8">
+    No teams found.
+  </p>
+) : (
+  <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mt-8">
+    {filteredTeams.map((team) => (
          <TeamCard
   key={team._id}
   _id={team._id}
@@ -55,8 +60,9 @@ function FeaturedTeams({ search }) {
   deadline={team.deadline}
   createdBy={team.createdBy}
 />
-        ))}
-      </div>
+    ))}
+  </div>
+)}
     </section>
   );
 }
