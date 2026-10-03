@@ -12,8 +12,8 @@ import Footer from "./components/Footer";
 
 import CreateTeam from "./pages/CreateTeam";
 import Requests from "./pages/Requests";
-import Login from "./pages/login";
-import Signup from "./pages/signup";
+import Login from "./pages/Login";
+import Signup from "./pages/Signup";
 import MyRequests from "./pages/MyRequests";
 import MyTeams from "./pages/MyTeams";
 
